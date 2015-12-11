@@ -1,0 +1,13 @@
+
+
+development:
+  sessions:
+    default:
+      database: siji
+      hosts:
+      - localhost:27017
+
+production:
+  sessions:
+    default:
+      url: <&= ENV['MONGOID_URL] &>
