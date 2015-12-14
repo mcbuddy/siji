@@ -10,7 +10,7 @@ development:
 production:
   sessions:
     default:
-      url: <&= ENV['MONGOLAB_URI] &>
+      url: <&= ENV['MONGOLAB_URI'] &>
       options:
         consistency: :strong
         max_retries: 1
