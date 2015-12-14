@@ -10,7 +10,9 @@ development:
 production:
   sessions:
     default:
-      url: <&= ENV['MONGOLAB_URI'] &>
+      database: siji
+      hosts:
+      - <&= ENV['MONGOLAB_HOST'] &>
       options:
         consistency: :strong
         max_retries: 1
