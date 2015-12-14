@@ -11,3 +11,7 @@ production:
   sessions:
     default:
       url: <&= ENV['MONGOLAB_URI] &>
+      options:
+        consistency: :strong
+        max_retries: 1
+        retry_interval: 0
