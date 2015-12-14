@@ -10,4 +10,4 @@ development:
 production:
   sessions:
     default:
-      url: <&= ENV['MONGOID_URL] &>
+      url: <&= ENV['MONGOLAB_URI] &>
