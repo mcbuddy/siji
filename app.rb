@@ -14,6 +14,8 @@ configure do
     when 'production'
       Mongoid.load!("config/mongoid.yml", :production)
   end
+end
+
 
 # the routes
 post '/login' do
@@ -56,6 +58,4 @@ delete '/users/:id' do
   users.delete
   status 202
 end
-
-
 
