@@ -11,6 +11,7 @@ production:
   sessions:
     default:
       url: <&= ENV['MONGOLAB_URI'] &>
+      database: siji
       options:
         consistency: :strong
         max_retries: 5
