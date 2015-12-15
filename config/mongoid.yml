@@ -8,11 +8,13 @@ development:
       - localhost:27017
 
 production:
-  uri: <&= ENV['MONGOLAB_URI'] &>
-  options:
-    consistency: :strong
-    max_retries: 30
-    retry_interval: 1
-    timeout: 30
-    safe: true
-    refresh_interval: 10
+  sessions:
+    default:
+      uri: <&= ENV['MONGOLAB_URI'] &>
+      options:
+        consistency: :strong
+        max_retries: 30
+        retry_interval: 1
+        timeout: 30
+        safe: true
+        refresh_interval: 10
