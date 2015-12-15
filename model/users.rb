@@ -13,8 +13,8 @@ class Users
   field :first_name, type: String
   field :last_name, type: String
   field :password_hash, type: String
-  # field :auth_token, type: String
-  # field :expired_time, type:Date
+  field :auth_token, type: String
+  field :expired_time, type:Date
 
   validates_presence_of :email, message: 'Email is required.'
 
