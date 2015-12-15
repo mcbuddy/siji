@@ -13,6 +13,8 @@ production:
       uri: <&= ENV['MONGOLAB_URI'] &>
       options:
         consistency: :strong
-        max_retries: 5
+        max_retries: 30
         retry_interval: 1
         timeout: 30
+        safe: true
+        refresh_interval: 10
