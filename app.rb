@@ -8,7 +8,7 @@ require_relative 'model/users'
 
 # Configure the mongo client
 configure do
-    Mongoid.load!("config/mongoid.yml")
+    Mongoid.load!("config/mongoid.yml", :development)
 end
 
 
