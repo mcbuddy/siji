@@ -13,6 +13,8 @@ class Users
   field :first_name, type: String
   field :last_name, type: String
   field :password_hash, type: String
+  field :auth_token, type: String
+  field :expired_time, type:Date
 
   validates_presence_of :email, message: 'Email is required.'
 
@@ -41,7 +43,7 @@ class Users
   def self.generate_access_token
     auth_token   = SecureRandom.hex
     expired_time = Time.now + 3600 # token will expired within a hour
-    access_token = { auth_token: auth_token, expired_ob: expired_time }
+    access_token = { auth_token: auth_token, expired_at: expired_time }
     return access_token
   end
 
