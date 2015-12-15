@@ -8,12 +8,7 @@ require_relative 'model/users'
 
 # Configure the mongo client
 configure do
-  case ENV['RACK_ENV']
-    when 'development'
-      Mongoid.load!("config/mongoid.yml", :development)
-    when 'production'
-      Mongoid.load!("config/mongoid.yml", :production)
-  end
+    Mongoid.load!("config/mongoid.yml", :production)
 end
 
 
