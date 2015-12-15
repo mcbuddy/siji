@@ -1,14 +1,14 @@
 
 
 development:
-  sessions:
+  clients:
     default:
       database: siji
       hosts:
       - localhost:27017
 
 production:
-  sessions:
+  clients:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
       options:

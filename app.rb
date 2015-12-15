@@ -6,9 +6,7 @@ Bundler.require(:default)
 # Load the user model
 require_relative 'model/users'
 
-# class App < Sinatra:Application
-
-  # Configure the mongo client
+# Configure the mongo client
 configure do
   if ENV['RACK_ENV'].eql? 'production'
     Mongoid.load!("config/mongoid.yml", :production)
@@ -58,4 +56,3 @@ end
     users.delete
     status 202
   end
-# end

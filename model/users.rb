@@ -5,8 +5,8 @@ class Users
   include Mongoid::Timestamps
   include BCrypt
 
-  attr_accessor :password, :password_confirmation
-  attr_protected :password_hash
+  attr_accessor :password, :password_confirmation, :password_hash
+  # attr_protected :password_hash
 
   field :username, type: String
   field :email, type: String
