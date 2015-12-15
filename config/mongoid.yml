@@ -10,7 +10,7 @@ development:
 production:
   sessions:
     default:
-      url: <&= ENV['MONGOLAB_URI'] &>
+      uri: <&= ENV['MONGOLAB_URI'] &>
       database: siji
       options:
         consistency: :strong
