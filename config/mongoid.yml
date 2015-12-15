@@ -10,11 +10,8 @@ development:
 production:
   sessions:
     default:
-      uri: <&= ENV['MONGOLAB_URI'] &>
+      uri: <%= ENV['MONGOLAB_URI'] %>
       options:
-        consistency: :strong
-        max_retries: 30
-        retry_interval: 1
-        timeout: 30
+        skip_version_check: true
         safe: true
-        refresh_interval: 10
+        connect_timeout: 15
