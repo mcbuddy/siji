@@ -3,10 +3,10 @@ require 'bcrypt'
 class Users
   include Mongoid::Document
   include Mongoid::Timestamps
-  include BCrypt
+  include ActiveModel::MassAssignmentSecurity
 
-  attr_accessor :password, :password_confirmation, :password_hash
-  # attr_protected :password_hash
+  attr_accessible :password
+  attr_protected :password_hash
 
   field :username, type: String
   field :email, type: String
@@ -18,12 +18,14 @@ class Users
 
   validates_presence_of :email, message: 'Email is required.'
 
+  # before_save :secure_password
+
   def password
-    @password ||= Password.new(password_hash)
+    @password ||= BCrypt::Password.new(password_hash)
   end
 
   def password=(new_password)
-    @password = Password.create(new_password)
+    @password = BCrypt::Password.create(new_password)
     self.password_hash = @password
   end
 
@@ -45,6 +47,11 @@ class Users
     expired_time = Time.now + 3600 # token will expired within a hour
     access_token = { auth_token: auth_token, expired_at: expired_time }
     return access_token
+  end
+
+  def secure_password
+
+
   end
 
 
