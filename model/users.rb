@@ -29,6 +29,34 @@ class Users
     self.password_hash = @password
   end
 
+  def self.send_email(user, subject, body)
+    # getting the mailtrap info and send it to pony mailer
+    response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+    siji_inbox = JSON.parse(response)[0]
+
+    Pony.options = {:via => :smtp,
+                    :via_options => { :address        => siji_inbox['domain'],
+                                      :port           => siji_inbox['smtp_ports'][0],
+                                      :user_name      => siji_inbox['username'],
+                                      :password       => siji_inbox['password'],
+                                      :authentication => :plain,
+                                      :domain         => siji_inbox['domain']
+                    }}
+
+    Pony.email( :to => user.email,
+                :subject => subject,
+                :body => body )
+
+  end
+
+  def self.reset_password(data)
+    user = self.find_by(email: data['email'])
+    random_pwd = SecureRandom.hex(7)
+    user.password = random_pwd
+    user.save
+  #   send email action here
+  end
+
   def self.authentication(data)
     user = self.find_by(email: data['email'])
     if user.password == data['password']
@@ -49,11 +77,19 @@ class Users
     return access_token
   end
 
-  def secure_password
-
-
+  def self.check_token(token)
+    if self.auth_token == token
+      check_expired_token
+      response = {success: true, code: 200}
+      response.to_json
+    else
+      response = {success: false, code: 403 }
+      response.to_json
+    end
   end
 
-
+  def self.check_expired_token
+    current_time = Time.now
+    return true unless self.expired_at < current_time
+    end
 end
-
