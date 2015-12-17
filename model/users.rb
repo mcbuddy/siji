@@ -43,10 +43,9 @@ class Users
                                       :domain         => siji_inbox['domain']
                     }}
 
-    Pony.email( :to => user.email,
+    Pony.mail({:to => user.email,
                 :subject => subject,
-                :body => body )
-
+                :body => body })
   end
 
   def self.reset_password(data)
