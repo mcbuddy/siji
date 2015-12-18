@@ -1,4 +1,4 @@
-# sijiL
+# siji
 Simple Single Login Api service 
 Built using Ruby, Sinatra and MongoDB.
 This application currently running in heroku PaaS

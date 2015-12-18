@@ -19,6 +19,9 @@ configure do
 end
 
 # the routes
+get '/' do
+
+end
 
 namespace '/api' do
   def validate_user(request)
