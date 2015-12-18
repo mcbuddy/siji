@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe 'Users API' do
   before(:all) do
-    @param = {:data => {email: "test#{Time.now.to_i}@test.com", password: 'Test1234'}}.to_json
+    @param = {email: "test#{Time.now.to_i}@test.com", password: 'Test1234'}.to_json
   end
   # let!(:user) { FactoryGirl.create(:user) }
 

@@ -23,7 +23,7 @@ get '/' do
 
 end
 
-namespace '/apis' do
+namespace '/api' do
   def validate_user(request)
     data = JSON.parse(request.body.read)
     Users.check_token(data['auth_token'])
