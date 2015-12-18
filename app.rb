@@ -23,8 +23,6 @@ end
 namespace '/api' do
   def validate_user(request)
     data = JSON.parse(request.body.read)
-    puts data
-    puts data['auth_token']
     Users.check_token(data['auth_token'])
     true
   end

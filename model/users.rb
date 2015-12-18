@@ -81,8 +81,8 @@ class Users
       user.save
       return token
     else
-      status 404
-      return false
+      response = {success: false, code: 403 }
+      return response.to_json 404
     end
   end
 
@@ -95,18 +95,19 @@ class Users
   end
 
   def self.check_token(token)
-    if self.auth_token == token
-      check_expired_token
-      response = {success: true, code: 200}
-      response.to_json
-    else
-      response = {success: false, code: 403 }
-      response.to_json
-    end
+    user = Users.find_by(auth_token: token)
+      if user.auth_token == token
+        check_expired_token(user)
+        response = {success: true, code: 200}
+        return response.to_json
+      else
+        response = {success: false, code: 403 }
+        return response.to_json
+      end
   end
 
-  def self.check_expired_token
+  def self.check_expired_token(user)
     current_time = Time.now
-    return true unless self.expired_at < current_time
+    return true unless user.expired_time < current_time
     end
 end
