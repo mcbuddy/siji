@@ -46,8 +46,7 @@ namespace '/api' do
 
   get '/reset_password' do
     data = JSON.parse(request.body.read)
-    user = Users.reset_password(data)
-    Users.reset_password(user)
+    Users.reset_password(data['email'])
   end
 
   get '/users' do

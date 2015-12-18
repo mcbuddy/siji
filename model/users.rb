@@ -49,10 +49,8 @@ class Users
   end
 
   def self.send_email_registration(user)
-    subject_email = 'Your Password has been reset'
-    body_email    = "Hi #{user.first_name}, \n
-                     Welcome to Siji \n
-                     Thank you! "
+    subject_email = 'Welcome to Siji'
+    body_email    = "Hi #{user.first_name},\nYou have been register as user at Siji\nThank you! "
 
     self.send_email(user, subject_email, body_email)
     resposse = {message: 'Email Registration has been sent.'}
@@ -60,19 +58,18 @@ class Users
   end
 
 
-  def self.reset_password(data)
-    user = self.find_by(email: data['email'])
+  def self.reset_password(email)
+    user = self.find_by(email: email)
     random_pwd = SecureRandom.hex(7)
     user.password = random_pwd
     user.save
 
     subject_email = 'Your Password has been reset'
-    body_email    = "Hi #{user.first_name}, \n
-                     We recently received a request to reset your password \n
-                     Your new password is: #{random_pwd} \n
-                     Thank you ! "
+    body_email    = "Hi #{user.first_name},\nWe recently received a request to reset your password\nYour new password is: #{random_pwd}\nThank you ! "
 
     self.send_email(user, subject_email, body_email)
+    resposse = {message: 'Your new password has been sent to your email address.'}
+    return resposse
   end
 
   def self.authentication(data)
