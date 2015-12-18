@@ -31,8 +31,7 @@ class Users
 
   def self.send_email(user, subject, body)
     # getting the mailtrap info and send it to pony mailer
-    ENV['MAILTRAP_API_TOKEN'] = 'a888304a1390fa4a818d7f9d66a1403a'
-    response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+    response = RestClient.get "https://mailtrap.io/api/v1/inboxesq.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
     siji_inbox = JSON.parse(response)[0]
 
     Pony.options = {:via => :smtp,

@@ -25,9 +25,12 @@ GEM
     bson_ext (1.5.1)
     builder (3.2.2)
     daemons (1.2.3)
+    diff-lcs (1.2.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     eventmachine (1.0.8)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -57,6 +60,19 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.1)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -88,11 +104,13 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   bson_ext
+  factory_girl
   json
   mongoid (~> 5.0.0)
   pony
   protected_attributes!
   rest-client
+  rspec
   sinatra
   sinatra-contrib
   sinatra-param

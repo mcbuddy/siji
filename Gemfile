@@ -12,3 +12,8 @@ gem 'mongoid' , '~> 5.0.0'
 gem 'bson_ext'
 gem 'thin'
 gem 'pony'
+
+group :test do
+  gem 'rspec'
+  gem 'factory_girl'
+end

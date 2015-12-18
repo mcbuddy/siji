@@ -23,7 +23,7 @@ get '/' do
 
 end
 
-namespace '/api' do
+namespace '/apis' do
   def validate_user(request)
     data = JSON.parse(request.body.read)
     Users.check_token(data['auth_token'])
@@ -37,6 +37,7 @@ namespace '/api' do
   end
 
   post '/signup' do
+    puts request.body.read
     data = JSON.parse(request.body.read)
     user = Users.new(data)
     user.save
