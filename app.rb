@@ -11,26 +11,34 @@ register Sinatra::Namespace
 
 # Configure the mongo client
 configure do
-  if ENV['RACK_ENV'].eql? 'production'
-    Mongoid.load!("config/mongoid.yml", :production)
-  else
-    Mongoid.load!("config/mongoid.yml", :development)
+  case ENV['RACK_ENV']
+    when 'production'
+      Mongoid.load!("config/mongoid.yml", :production)
+    when'development'
+      Mongoid.load!("config/mongoid.yml", :development)
+    when 'test'
+      Mongoid.load!("config/mongoid.yml", :test)
   end
 end
 
 # the routes
 get '/' do
-
+  File.read(File.join('public', 'index.html'))
 end
 
 namespace '/api' do
-  def validate_user(request)
-    data = JSON.parse(request.body.read)
-    Users.check_token(data['auth_token'])
-    true
+  def validate_user(headers)
+    if headers['AUTH-TOKEN'].nil?
+      response = {success: false, code: 403 }
+      return response.to_json
+    else
+      token = Users.check_token(headers['AUTH-TOKEN'])
+      return true if token.eql true
+    end
   end
 
   post '/login' do
+    puts headers
     data = JSON.parse(request.body.read)
     user = Users.authentication(data)
     user.to_json
@@ -51,7 +59,8 @@ namespace '/api' do
   end
 
   get '/users' do
-    valid = validate_user(request)
+    puts headers['AUTH-TOKEN']
+    valid = validate_user(headers)
     if valid.eql? true
       return Users.all.to_json
     end
@@ -65,7 +74,6 @@ namespace '/api' do
       users.to_json
     end
   end
-
 
   put '/users/:id' do
     valid = validate_user(request)

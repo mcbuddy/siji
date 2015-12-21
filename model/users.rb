@@ -99,14 +99,16 @@ class Users
         check_expired_token(user)
         response = {success: true, code: 200}
         return response.to_json
+        true
       else
         response = {success: false, code: 403 }
         return response.to_json
+        false
       end
   end
 
   def self.check_expired_token(user)
     current_time = Time.now
-    return true unless user.expired_time < current_time
+    return true unless user.expired_time > current_time
     end
 end
