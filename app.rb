@@ -27,13 +27,13 @@ get '/' do
 end
 
 namespace '/api' do
-  def validate_user(headers)
-    if headers['AUTH-TOKEN'].nil?
+  def validate_user(env)
+    if env['HTTP_AUTH_TOKEN'].nil?
       response = {success: false, code: 403 }
       return response.to_json
     else
-      token = Users.check_token(headers['AUTH-TOKEN'])
-      return true if token.eql true
+      Users.check_token(env['HTTP_AUTH_TOKEN'])
+      true
     end
   end
 
@@ -59,15 +59,14 @@ namespace '/api' do
   end
 
   get '/users' do
-    puts headers['AUTH-TOKEN']
-    valid = validate_user(headers)
+    valid = validate_user(env)
     if valid.eql? true
       return Users.all.to_json
     end
   end
 
-  get '/users/:id' do
-    valid = validate_user(request)
+  get '/users/id/:id' do
+    valid = validate_user(env)
     if valid.eql? true
       users = Users.find(params[:id])
       return status 404 if Users.nil?
@@ -75,8 +74,17 @@ namespace '/api' do
     end
   end
 
+  get '/users/email/:email' do
+    valid = validate_user(env)
+    if valid.eql? true
+      users = Users.find_by(email: params[:email])
+      return status 404 if Users.nil?
+      users.to_json
+    end
+  end
+
   put '/users/:id' do
-    valid = validate_user(request)
+    valid = validate_user(env)
     if valid.eql? true
       users = Users.find(params[:id])
       return status 404 if users.nil?
@@ -89,7 +97,7 @@ namespace '/api' do
   end
 
   delete '/users/:id' do
-    valid = validate_user(request)
+    valid = validate_user(env)
     if valid.eql? true
       users = Users.find(params[:id])
       return status 404 if users.nil?
