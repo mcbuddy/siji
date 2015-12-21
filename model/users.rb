@@ -18,7 +18,7 @@ class Users
 
   validates_presence_of :email, message: 'Email is required.'
 
-  # before_save :secure_password
+  has_one :role
 
   def password
     @password ||= BCrypt::Password.new(password_hash)
