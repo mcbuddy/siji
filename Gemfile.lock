@@ -25,6 +25,7 @@ GEM
     bson_ext (1.5.1)
     builder (3.2.2)
     daemons (1.2.3)
+    database_cleaner (1.5.1)
     diff-lcs (1.2.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
@@ -104,6 +105,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby
   bson_ext
+  database_cleaner
   factory_girl
   json
   mongoid (~> 5.0.0)
