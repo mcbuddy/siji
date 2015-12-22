@@ -26,8 +26,6 @@ class Users
 
   embeds_one :roles #, default: 'Standard'
 
-  # after_save :assign_role
-
   def password
     @password ||= BCrypt::Password.new(password_hash)
   end

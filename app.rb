@@ -50,7 +50,6 @@ namespace '/api' do
     user.save
     res = Users.send_email_registration(user)
     return res.to_json
-    status 201
   end
 
   get '/reset_password' do
