@@ -47,6 +47,8 @@ GEM
       mongo (~> 2.1)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
+    mongoid-autoinc (5.0.1)
+      mongoid (~> 5.0.0)
     multi_json (1.11.2)
     netrc (0.10.3)
     origin (2.1.1)
@@ -109,6 +111,7 @@ DEPENDENCIES
   factory_girl
   json
   mongoid (~> 5.0.0)
+  mongoid-autoinc
   pony
   protected_attributes!
   rest-client

@@ -1,12 +1,17 @@
 require 'bcrypt'
+require 'autoinc'
 
 class Users
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Autoinc
   include ActiveModel::MassAssignmentSecurity
 
-  attr_accessible :password, :auth_token, :expired_time
+  attr_accessible :password, :auth_token, :expired_time, :role_id
   attr_protected :password_hash
+
+  field :id, type: Integer
+  increments :id
 
   field :username, type: String
   field :email, type: String
@@ -15,10 +20,11 @@ class Users
   field :password_hash, type: String
   field :auth_token, type: String
   field :expired_time, type:Date
+  field :role_id
 
-  validates_presence_of :email, message: 'Email is required.'
+  validates :email, :uniqueness => true, :presence => true #, message: 'Email is required.'
 
-  # before_save :secure_password
+  embeds_one :roles #, default: 'Standard'
 
   def password
     @password ||= BCrypt::Password.new(password_hash)
@@ -27,6 +33,10 @@ class Users
   def password=(new_password)
     @password = BCrypt::Password.create(new_password)
     self.password_hash = @password
+  end
+
+  def self.assign_role(user)
+    user.role_id = Roles.first.id
   end
 
   def self.send_email(user, subject, body)
@@ -89,7 +99,6 @@ class Users
     auth_token   = SecureRandom.hex
     expired_time = Time.now + 3600 # token will expired within a hour
     access_token = { auth_token: auth_token, expired_time: expired_time }
-
     return access_token
   end
 

@@ -6,8 +6,7 @@ Bundler.require(:default)
 
 # Load the user model
 require_relative 'model/users'
-register Sinatra::Namespace
-
+require_relative 'model/roles'
 
 # Configure the mongo client
 configure do
@@ -47,10 +46,10 @@ namespace '/api' do
   post '/signup' do
     data = JSON.parse(request.body.read)
     user = Users.new(data)
+    Users.assign_role(user)
     user.save
     res = Users.send_email_registration(user)
     return res.to_json
-    status 201
   end
 
   get '/reset_password' do
