@@ -29,11 +29,10 @@ namespace '/api' do
   def validate_user(env)
     if env['HTTP_AUTH_TOKEN'].nil?
       response = {success: false, code: 403 }
-      return response.to_json
     else
-      Users.check_token(env['HTTP_AUTH_TOKEN'])
-      true
+      response = Users.check_token(env['HTTP_AUTH_TOKEN'])
     end
+    return response
   end
 
   post '/login' do
@@ -59,17 +58,21 @@ namespace '/api' do
 
   get '/users' do
     valid = validate_user(env)
-    if valid.eql? true
+    if valid[:success].eql? true
       return Users.all.to_json
+    else
+      return valid.to_json
     end
   end
 
   get '/users/id/:id' do
     valid = validate_user(env)
-    if valid.eql? true
+    if valid[:success].eql? true
       users = Users.find(params[:id])
       return status 404 if Users.nil?
       users.to_json
+    else
+      return valid.to_json
     end
   end
 
@@ -79,6 +82,8 @@ namespace '/api' do
       users = Users.find_by(email: params[:email])
       return status 404 if Users.nil?
       users.to_json
+    else
+      return valid.to_json
     end
   end
 
@@ -92,6 +97,9 @@ namespace '/api' do
       users.save
       status 202
       users.to_json
+    else
+      return valid.to_json
+
     end
   end
 
@@ -102,6 +110,8 @@ namespace '/api' do
       return status 404 if users.nil?
       users.delete
       status 202
+    else
+      return valid.to_json
     end
   end
 end

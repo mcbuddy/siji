@@ -91,33 +91,34 @@ class Users
       return token
     else
       response = {success: false, code: 403 }
-      return response.to_json 404
+      return response
     end
   end
 
   def self.generate_access_token
     auth_token   = SecureRandom.hex
-    expired_time = Time.now + 3600 # token will expired within a hour
-    access_token = { auth_token: auth_token, expired_time: expired_time }
+    expired_time = Time.now #+ 3600 # token will expired within a hour
+    access_token = { auth_token: auth_token, expired_time: expired_time}
     return access_token
   end
 
   def self.check_token(token)
     user = Users.find_by(auth_token: token)
       if user.auth_token == token
-        check_expired_token(user)
-        response = {success: true, code: 200}
-        return response.to_json
-        true
+        response = check_expired_token(user)
       else
         response = {success: false, code: 403 }
-        return response.to_json
-        false
       end
+    return response
   end
 
   def self.check_expired_token(user)
     current_time = Time.now
-    return true unless user.expired_time > current_time
+    if current_time > user.expired_time
+      response = {success: false, message:'Your token expired, please re-login to get new token' }
+    else
+      response = {success: true}
     end
+    return response
+  end
 end
