@@ -97,7 +97,7 @@ class Users
 
   def self.generate_access_token
     auth_token   = SecureRandom.hex
-    expired_time = Time.now #+ 3600 # token will expired within a hour
+    expired_time = Time.now + 3600 # token will expired within a hour
     access_token = { auth_token: auth_token, expired_time: expired_time}
     return access_token
   end
